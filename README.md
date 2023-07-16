@@ -14,3 +14,4 @@ docker compose up
 - [Node.js](https://hub.docker.com/_/node)
 - [Redis Stack](https://hub.docker.com/r/redis/redis-stack-server)
 - [RedisInsight](https://github.com/RedisInsight/RedisInsight)
+- [node-redis](https://github.com/redis/node-redis)
