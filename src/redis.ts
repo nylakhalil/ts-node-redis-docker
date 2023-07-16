@@ -2,6 +2,12 @@ import { RedisClientOptions, createClient } from "redis";
 
 export type RedisClientType = ReturnType<typeof createClient>;
 
+/**
+ * Checks Redis connection isOpen and isReady. Pings Redis server.
+ *
+ * @param redisClient - The RedisClientType to test
+ * @returns Whether connection is active
+ */
 export const isConnected = async function (redisClient: RedisClientType): Promise<boolean> {
   console.debug("Pinging Redis server");
 
@@ -15,10 +21,17 @@ export const isConnected = async function (redisClient: RedisClientType): Promis
   return status === "PONG";
 };
 
+/**
+ * Creates a Redis client connection using node-redis package
+ *
+ * @param redisUrl - A URL string to connect to Redis server
+ * @returns Redis client connection
+ * @throws	Error
+ */
 export const createRedisClient = async function (redisUrl: string): Promise<RedisClientType> {
   console.info("Creating Redis client");
   const clientOptions: RedisClientOptions = {
-    url: redisUrl
+    url: redisUrl,
   };
 
   const redisClient = createClient(clientOptions);
