@@ -1,0 +1,22 @@
+version: '3'
+services:
+  redis:
+    container_name: redis-stack
+    image: redis/redis-stack:latest
+    restart: always
+    ports:
+      - '6379:6379'
+      - '8001:8001'
+  node:
+    container_name: node-redis
+    image: node:lts-alpine
+    restart: always
+    working_dir: '/app'
+    command: [ 'node', 'index.js' ]
+    environment:
+      HTTP_HOST: '0.0.0.0'
+      HTTP_PORT: '3001'
+    ports:
+      - '3001:3001'
+    volumes:
+      - .:/app

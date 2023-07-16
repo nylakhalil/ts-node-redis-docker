@@ -1,0 +1,10 @@
+{
+  "extends": "@tsconfig/node-lts/tsconfig.json",
+  "compilerOptions": {
+    "typeRoots": [
+      "./node_modules/@types"
+    ]
+  },
+  "include": ["*.ts"],
+  "exclude": ["node_modules"],
+}

@@ -1,0 +1,29 @@
+{
+  "name": "ts-node-redis-docker",
+  "version": "1.0.0",
+  "description": "A basic, no-frills local dev playground to try Redis Stack with Docker, Node.js and TypeScript",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "build": "./node_modules/typescript/bin/tsc",
+    "clean": "rm index.js && rm redis.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": {
+    "name" : "Nyla Khalil",
+    "url" : "https://techitude.net"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "redis": "^4.6.7"
+  },
+  "devDependencies": {
+    "@tsconfig/node-lts": "^18.12.3",
+    "@types/node": "^20.4.2",
+    "typescript": "^5.1.6"
+  },
+  "prettier": {
+    "printWidth": 120
+  }
+}
