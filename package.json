@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "build": "./node_modules/typescript/bin/tsc",
-    "clean": "rm index.js && rm redis.js",
+    "clean": "rm src/*.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },

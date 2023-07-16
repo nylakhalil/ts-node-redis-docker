@@ -11,6 +11,7 @@ const writeEntry = async function (redisClient: redisClient.RedisClientType): Pr
 
 const startHttpServer = async function (): Promise<undefined> {
   try {
+		console.info("Server starting");
     const hostName = process.env.HTTP_HOST || "localhost";
     const httpPort = process.env.HTTP_PORT || "3000";
     const redisUrl = process.env.REDIS_URL || "redis://redis-stack:6379";
@@ -52,7 +53,7 @@ const startHttpServer = async function (): Promise<undefined> {
 
     process.on("SIGTERM", cleanup);
   } catch (e) {
-    console.error("Redis app error", e);
+    console.error("App error", e);
     process.exit(1);
   }
 };
