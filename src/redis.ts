@@ -1,4 +1,4 @@
-import { RedisClientOptions, createClient } from "redis";
+import { createClient, RedisClientOptions } from "redis"; // Alternatively '@redis/client'
 
 export type RedisClientType = ReturnType<typeof createClient>;
 
@@ -30,16 +30,21 @@ export const isConnected = async function (redisClient: RedisClientType): Promis
  */
 export const createRedisClient = async function (redisUrl: string): Promise<RedisClientType> {
   console.info("Creating Redis client");
+
   const clientOptions: RedisClientOptions = {
     url: redisUrl,
+    socket: {
+      connectTimeout: 1000,
+    },
   };
 
   const redisClient = createClient(clientOptions);
-  await redisClient.connect();
 
-  redisClient.on("end", () => {
-    console.info("Redis connection ended");
-  });
+  redisClient.on("ready", () => console.log("Redis client ready"));
+  redisClient.on("error", (e: any) => console.error("Redis client error", e));
+  redisClient.on("end", () => console.error("Redis client closed"));
+
+  await redisClient.connect();
 
   const connected = await isConnected(redisClient);
   if (!connected) {

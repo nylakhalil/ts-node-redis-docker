@@ -1,12 +1,15 @@
 import http from "node:http";
 import * as redisClient from "./redis.js";
 
-const writeEntry = async function (redisClient: redisClient.RedisClientType): Promise<string> {
+type WriteEntryResponse = { success: boolean; key: string };
+
+const writeEntry = async function (redisClient: redisClient.RedisClientType): Promise<WriteEntryResponse> {
   const timestamp = Date.now();
   const key = `docker-redis-app:${timestamp}`;
   console.info("Setting Redis key -", key);
-  redisClient.set(key, `Set by Redis app on ${new Date(timestamp).toISOString()}`, { EX: 60 });
-  return key;
+
+  const response = await redisClient.set(key, `Set by Redis app on ${new Date(timestamp).toISOString()}`, { EX: 60 });
+  return { success: response === "OK", key: key };
 };
 
 const startHttpServer = async function (): Promise<undefined> {
@@ -44,6 +47,7 @@ const startHttpServer = async function (): Promise<undefined> {
     };
 
     const server = http.createServer(writeEntryListener);
+    server.setTimeout(1000);
 
     server.listen(parseInt(httpPort), hostName, () => {
       console.log(`Node server is running on http://${hostName}:${httpPort}`);
